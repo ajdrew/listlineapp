@@ -1,14 +1,23 @@
 const express = require('express')
-const app = express()
 const path = require("path")
-// const routes = require('/routes')
+const bodyParser = require("body-parser")
+const app = express()
 
 // STATIC RESOURCES
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // EXPRESS ROUTE - INDEX
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+ '/public/cucm2.html'), {
+    'title': 'CUCM 2.0'
+  });
+})
+
+// EXPRESS ROUTE - RESULTS
+app.get('/cucmmapper-results', function (req, res) {
+  res.sendFile(path.join(__dirname+ '/public/cucm2-results.html'), {
     'title': 'CUCM 2.0'
   });
 })
