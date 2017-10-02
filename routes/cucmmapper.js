@@ -1,18 +1,22 @@
 module.exports = function (app) {
   // FORM - SUBMIT - CUCMMAPPER
   app.post('/cucmmapper/submit', function (req, res) {
+    // TESTING - ECHO ALL BODY VALUES
     console.log(req.body);
+    
     // FORM - DATA COLLECTION
     var cucmpub = req.body.cucmpub;
-    //var username = req.body.username;
-    //var password = req.body.password;
+    var username = req.body.username;
+    var password = req.body.password;
 
-
+    console.log(cucmpub);
 
     // SOAP - BUILD CALL
     var https = require("https");
 
-    var authentication = 'user:password';
+    var authentication = username + ":" + password;
+
+    console.log(authentication);
 
     var headers = {
       'SoapAction': 'CUCM:DB ver=11.5 listCss',
@@ -39,13 +43,15 @@ module.exports = function (app) {
 
     // SOAP - OPTIONS
     var options = {
-      host: '192.168.204.10', // The IP Address of the Communications Manager Server
+      host: cucmpub, // The IP Address of the Communications Manager Server
       port: 8443, // Clearly port 443 for SSL -- I think it's the default so could be removed
       path: '/axl/', // This is the URL for accessing axl on the server
       method: 'POST', // AXL Requires POST messages
       headers: headers, // using the headers we specified earlier
       rejectUnauthorized: false // required to accept self-signed certificate
     };
+
+    console.log(options);
 
     // SOAP - Doesn't seem to need this line, but it might be useful anyway for pooling?
     options.agent = new https.Agent(options);
