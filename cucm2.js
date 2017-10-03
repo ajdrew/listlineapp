@@ -1,12 +1,16 @@
 const express = require('express')
 const path = require("path")
 const bodyParser = require("body-parser")
+const hbs = require('hbs')
 const app = express()
 
 // STATIC RESOURCES
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.engine('html', require('hbs').__express);
+app.set('views', __dirname+ '/views');
+app.set('view engine', 'html');
 
 // EXPRESS ROUTE - INDEX
 app.get('/', function (req, res) {

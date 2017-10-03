@@ -17,8 +17,6 @@ module.exports = function (app) {
 
     var authentication = username + ":" + password;
 
-    console.log(authentication);
-
     var headers = {
       'SoapAction': 'CUCM:DB ver=' + cucmversion + ' listCss',
       'Authorization': 'Basic ' + new Buffer(authentication).toString('base64'),
@@ -52,18 +50,19 @@ module.exports = function (app) {
       rejectUnauthorized: false // required to accept self-signed certificate
     };
 
-    console.log(options);
-
     // SOAP - Doesn't seem to need this line, but it might be useful anyway for pooling?
     options.agent = new https.Agent(options);
 
     // SOAP - OPEN SESSION
     var req = https.request(options, function (res) {
-      console.log("status code = ", res.statusCode);
-      console.log("headers = ", res.headers);
+      // console.log("status code = ", res.statusCode);
+      // console.log("headers = ", res.headers);
       res.setEncoding('utf8');
       res.on('data', function (d) {
-        console.log("Got Data: " + d);
+        console.log("Got Data ...")
+        soapreply = d;
+        //console.log("Got Data: " + d);
+        complete();
       });
     });
 
@@ -78,6 +77,15 @@ module.exports = function (app) {
     //output.innerHTML = "hello world";
 
     // SOAP - INVISIBLE REDIRECT TO INFORMATION
-    res.render('/cucmmapper-results');
+    // res.render('cucmmapper-results.html');
+
+    function complete() {
+      if (soapreply !== null) {
+        res.render('cucmmapper-results.html', {
+          layout: false,
+          'data': soapreply,
+        });
+      }
+    }
   });
 }
