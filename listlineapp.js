@@ -1,10 +1,9 @@
 var https = require("https");
 
-var authentication = 'ajp-axl-test:wordpass@cucm';
-var authusername =
+var authentication = 'WebAdmin:!CucmL@b!';
 
 var headers = {
-  'SoapAction':'CUCM:DB ver=11.5 listCss',
+  'SoapAction':'CUCM:DB ver=11.0 listCss',
   'Authorization': 'Basic ' + new Buffer(authentication).toString('base64'),
   'Content-Type': 'text/xml; charset=utf-8'
 }
@@ -27,7 +26,7 @@ var soapBody = new Buffer('<soapenv:Envelope xmlns:soapenv="http://schemas.xmlso
 
 
 var options = {
-  host: '192.168.204.10',     // The IP Address of the Communications Manager Server
+  host: '10.37.252.20',     // The IP Address of the Communications Manager Server
   port: 8443,                 // Clearly port 443 for SSL -- I think it's the default so could be removed
   path: '/axl/',              // This is the URL for accessing axl on the server
   method: 'POST',             // AXL Requires POST messages

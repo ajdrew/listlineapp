@@ -3,9 +3,10 @@ module.exports = function (app) {
   app.post('/cucmmapper/submit', function (req, res) {
     // TESTING - ECHO ALL BODY VALUES
     console.log(req.body);
-    
+
     // FORM - DATA COLLECTION
     var cucmpub = req.body.cucmpub;
+    var cucmversion = req.body.cucmversion;
     var username = req.body.username;
     var password = req.body.password;
 
@@ -19,7 +20,7 @@ module.exports = function (app) {
     console.log(authentication);
 
     var headers = {
-      'SoapAction': 'CUCM:DB ver=11.5 listCss',
+      'SoapAction': 'CUCM:DB ver=' + cucmversion + ' listCss',
       'Authorization': 'Basic ' + new Buffer(authentication).toString('base64'),
       'Content-Type': 'text/xml; charset=utf-8'
     };
@@ -73,7 +74,10 @@ module.exports = function (app) {
       console.error(e);
     });
 
+    //var output = document.getElementById("soapdump");
+    //output.innerHTML = "hello world";
+
     // SOAP - INVISIBLE REDIRECT TO INFORMATION
-    res.redirect('/cucmmapper-results');
+    res.render('/cucmmapper-results');
   });
 }

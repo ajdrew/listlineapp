@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class="col-md-12" class="pull-left">
                         <form class="form-horizontal" method="post" action="/cucmmapper/submit" id="cucmmapper">
-                            <!-- Text input-->
+                            <!-- INPUT - TEXT-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="cucmpub">CUCM Publisher</label>
                                 <div class="col-md-4">
@@ -118,7 +118,18 @@
                                 </div>
                             </div>
 
-                            <!-- Text input-->
+                            <!-- INPUT - SELECT-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="cucmpub">CUCM Version</label>
+                                <div class="col-md-4">
+                                    <select class="form-control" id="cucmversion" name="cucmversion">
+                                        <option>11.5</option>
+                                        <option>11.0</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- INPUT - TEXT-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="username">AXL Username</label>
                                 <div class="col-md-4">
@@ -126,15 +137,15 @@
                                 </div>
                             </div>
 
-                            <!-- Text input-->
+                            <!-- INPUT - PASSWORD-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="password">Password</label>
                                 <div class="col-md-4">
-                                    <input id="password" name="password" type="text" placeholder="password" class="form-control input-md" required="">
+                                    <input id="password" name="password" type="password" placeholder="password" class="form-control input-md" required="">
                                 </div>
                             </div>
 
-                            <!-- Button -->
+                            <!-- INPUT - BUTTON -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="submit"></label>
                                 <div class="col-md-4">
@@ -143,6 +154,8 @@
                             </div>
                         </form>
 
+                        <!-- OUTPUT -->
+                        <div id="soapdump"></div>
                     </div>
                 </div>
             </div>
