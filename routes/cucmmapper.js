@@ -1,22 +1,16 @@
 module.exports = function (app) {
   // FORM - SUBMIT - CUCMMAPPER
   app.post('/cucmmapper/submit', function (req, res) {
-    // TESTING - ECHO ALL BODY VALUES
-    console.log(req.body);
-
     // FORM - DATA COLLECTION
     var cucmpub = req.body.cucmpub;
     var cucmversion = req.body.cucmversion;
     var username = req.body.username;
     var password = req.body.password;
-
-    console.log(cucmpub);
+    var authentication = username + ":" + password;
+    var soapreplyx = '';
 
     // SOAP - BUILD CALL
     var https = require("https");
-
-    var authentication = username + ":" + password;
-
     var headers = {
       'SoapAction': 'CUCM:DB ver=' + cucmversion + ' listCss',
       'Authorization': 'Basic ' + new Buffer(authentication).toString('base64'),
@@ -42,12 +36,12 @@ module.exports = function (app) {
 
     // SOAP - OPTIONS
     var options = {
-      host: cucmpub, // The IP Address of the Communications Manager Server
-      port: 8443, // Clearly port 443 for SSL -- I think it's the default so could be removed
-      path: '/axl/', // This is the URL for accessing axl on the server
-      method: 'POST', // AXL Requires POST messages
-      headers: headers, // using the headers we specified earlier
-      rejectUnauthorized: false // required to accept self-signed certificate
+      host: cucmpub, // IP ADDRESS OF CUCM PUBLISHER
+      port: 8443, // DEFAULT CISCO SSL PORT
+      path: '/axl/', // AXL URL
+      method: 'POST', // AXL REQUIREMENT OF POST
+      headers: headers, // HEADER VAR
+      rejectUnauthorized: false // REQUIRED TO ACCEPT SELF-SIGNED CERTS
     };
 
     // SOAP - Doesn't seem to need this line, but it might be useful anyway for pooling?
@@ -59,15 +53,18 @@ module.exports = function (app) {
       // console.log("headers = ", res.headers);
       res.setEncoding('utf8');
       res.on('data', function (d) {
-        console.log("Got Data ...")
-        soapreply = d;
+        console.log("Got Data ...");
+        //soapreplyx = d;
         //console.log("Got Data: " + d);
-        complete();
       });
     });
 
     // SOAP - SEND AXL CALL
     req.write(soapBody);
+    res.render('cucmmapper-results.html'), {
+      'title': 'CUCM 2.1',
+      'soapreply': soapreplyx
+    };
     req.end();
     req.on('error', function (e) {
       console.error(e);
@@ -79,13 +76,13 @@ module.exports = function (app) {
     // SOAP - INVISIBLE REDIRECT TO INFORMATION
     // res.render('cucmmapper-results.html');
 
-    function complete() {
-      if (soapreply !== null) {
-        res.render('cucmmapper-results.html', {
-          layout: false,
-          'data': soapreply,
-        });
-      }
-    }
+    //function complete() {
+    //  if (soapreply !== null) {
+    //    res.render('cucmmapper-results.html', {
+    //      layout: false,
+    //      'data': soapreply,
+    //    });
+    //  }
+    //}
   });
 }

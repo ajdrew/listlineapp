@@ -9,12 +9,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('html', require('hbs').__express);
-app.set('views', __dirname+ '/views');
+//app.set('views', __dirname);
+//app.set('views', __dirname+ 'views');
 app.set('view engine', 'html');
 
 // EXPRESS ROUTE - INDEX
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname+ '/public/cucm2.html'), {
+  res.render(path.join(__dirname+ '/public/cucm2.html'), {
     'title': 'CUCM 2.0'
   });
 })
