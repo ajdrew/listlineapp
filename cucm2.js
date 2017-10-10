@@ -1,21 +1,24 @@
+
+// APP - INCLUDE
 const express = require('express')
 const path = require("path")
 const bodyParser = require("body-parser")
 const hbs = require('hbs')
+const parseString = require('xml2js').parseString
+
+// APP - DEFINITION
 const app = express()
 
-// STATIC RESOURCES
+// APP - BUILD
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('html', require('hbs').__express);
-//app.set('views', __dirname);
-//app.set('views', __dirname+ 'views');
 app.set('view engine', 'html');
 
 // EXPRESS ROUTE - INDEX
 app.get('/', function (req, res) {
-  res.render(path.join(__dirname+ '/public/cucm2.html'), {
+  res.render(path.join(__dirname+ '/views/index.html'), {
     'title': 'CUCM 2.0'
   });
 })
@@ -27,10 +30,10 @@ app.get('/cucmmapper-results', function (req, res) {
   });
 })
 
-// EXPRESS ROUTING - INCLUDE - CUCM Mapper
+// EXPRESS ROUTING - INCLUDE - CUCM MAPPER
 var routingextensions = require(__dirname+ '/routes/cucmmapper.js')(app);
 
-// APP
+// APP - START
 app.listen(3000, function () {
   console.log('CUCM 2.0 listening on port 3000!')
 })

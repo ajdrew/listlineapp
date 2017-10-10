@@ -1,15 +1,20 @@
 module.exports = function (app) {
   // FORM - SUBMIT - CUCMMAPPER
   app.post('/cucmmapper/submit', function (req, res) {
+
     // FORM - DATA COLLECTION
     var cucmpub = req.body.cucmpub;
     var cucmversion = req.body.cucmversion;
     var username = req.body.username;
     var password = req.body.password;
+
+    // JS - VARIABLE DEFINITION
     var authentication = username + ":" + password;
     var soapreplyx = '';
+    var csssearchx = '';
+    //var parser = new xml2js.parser();
 
-    // SOAP - BUILD CALL
+    // HTTP.REQUEST - BUILD CALL
     var https = require("https");
     var headers = {
       'SoapAction': 'CUCM:DB ver=' + cucmversion + ' listCss',
@@ -34,7 +39,7 @@ module.exports = function (app) {
       '</soapenv:Body>' +
       '</soapenv:Envelope>');
 
-    // SOAP - OPTIONS
+    // HTTP.REQUEST - OPTIONS
     var options = {
       host: cucmpub, // IP ADDRESS OF CUCM PUBLISHER
       port: 8443, // DEFAULT CISCO SSL PORT
@@ -44,13 +49,11 @@ module.exports = function (app) {
       rejectUnauthorized: false // REQUIRED TO ACCEPT SELF-SIGNED CERTS
     };
 
-    // SOAP - Doesn't seem to need this line, but it might be useful anyway for pooling?
+    // HTTP.REQUEST - Doesn't seem to need this line, but it might be useful anyway for pooling?
     options.agent = new https.Agent(options);
 
     // SOAP - OPEN SESSION
     var req = https.request(options, function (res) {
-      // console.log("status code = ", res.statusCode);
-      // console.log("headers = ", res.headers);
       res.setEncoding('utf8');
       res.on('data', function (d) {
         console.log("Got Data ...");
@@ -59,30 +62,32 @@ module.exports = function (app) {
       });
     });
 
+    // HTTP.REQUEST - RUN
+    let soapRequest = https.request(options, soapResponse => {
+      soapResponse.setEncoding('utf8');
+      soapResponse.on('data', chunk => {
+        soapreplyx += chunk
+      });
+      // HTTP.REQUEST - RESULTS + RENDER
+      soapResponse.on('end', () => {
+        // parser.parseString(soapreplyx, function(err, result) {
+        //   csssearchx = result['name']
+        //   console.log(csssearchx);
+        // })
+        // var csssearchx = $(soapreplyx).find("name").text();
+        return res.render('cucmmapper-results.html', {
+          title: 'CUCM 2.1',
+          soapreply: soapreplyx,
+          csssearch: csssearchx
+        });
+      });
+    });
+
     // SOAP - SEND AXL CALL
-    req.write(soapBody);
-    res.render('cucmmapper-results.html'), {
-      'title': 'CUCM 2.1',
-      'soapreply': soapreplyx
-    };
-    req.end();
+    soapRequest.write(soapBody);
+    soapRequest.end();
     req.on('error', function (e) {
       console.error(e);
     });
-
-    //var output = document.getElementById("soapdump");
-    //output.innerHTML = "hello world";
-
-    // SOAP - INVISIBLE REDIRECT TO INFORMATION
-    // res.render('cucmmapper-results.html');
-
-    //function complete() {
-    //  if (soapreply !== null) {
-    //    res.render('cucmmapper-results.html', {
-    //      layout: false,
-    //      'data': soapreply,
-    //    });
-    //  }
-    //}
   });
 }

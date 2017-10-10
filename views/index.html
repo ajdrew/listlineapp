@@ -7,7 +7,7 @@
 
     <title>{{title}}</title>
 
-    <!--CSS-->
+    <!--INCLUDE - CSS-->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
@@ -30,27 +30,18 @@
         });
     </script>
 
-    <!--
-  <script>
-    function doSomething() {
-      alert('Form submitted!');
-      return false;
-    }
-  </script>
--->
-
-
+    <!--BODY - BOOTSTRAP PAGE SETUP -->
     <div class="container-fluid" ng-app="">
         <div class="row">
             <div class="col-md-12">
+
+                <!--BODY - BOOTSTRAP NAVBAR -->
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">
-
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 					    </button> <a class="navbar-brand" href="/">CUCM<sup>2</sup></a>
                     </div>
-
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active">
@@ -62,51 +53,16 @@
                             <li>
                                 <a href="/"><img src="https://png.icons8.com/bug/color/24" title="Bug" width="16" height="16"> Debugger</a>
                             </li>
-                            <!-- DROPDOWN MENU
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Action</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Another action</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Something else here</a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="#">Separated link</a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="#">One more separated link</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        -->
                         </ul>
-                        <!-- SEARCH BAR
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" />
-                            </div>
-                            <button type="submit" class="btn btn-default">
-							Submit
-						</button>
-                        </form>
-                    -->
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a ng-href="https://{{cucmpub}}/ccmadmin/" target="_blank">{{cucmpub}}</a>
                             </li>
                         </ul>
                     </div>
-
                 </nav>
+
+                <!--BODY - CONTENT-->
                 <div class="row">
                     <div class="col-md-12" class="pull-left">
                         <form class="form-horizontal" method="post" action="/cucmmapper/submit" id="cucmmapper">
@@ -117,7 +73,6 @@
                                     <input id="cucmpub" name="cucmpub" type="text" placeholder="x.x.x.x" class="form-control input-md" required="" ng-model="cucmpub">
                                 </div>
                             </div>
-
                             <!-- INPUT - SELECT-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="cucmpub">CUCM Version</label>
@@ -128,7 +83,6 @@
                                     </select>
                                 </div>
                             </div>
-
                             <!-- INPUT - TEXT-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="username">AXL Username</label>
@@ -136,7 +90,6 @@
                                     <input id="username" name="username" type="text" placeholder="username" class="form-control input-md" required="">
                                 </div>
                             </div>
-
                             <!-- INPUT - PASSWORD-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="password">Password</label>
@@ -144,7 +97,6 @@
                                     <input id="password" name="password" type="password" placeholder="password" class="form-control input-md" required="">
                                 </div>
                             </div>
-
                             <!-- INPUT - BUTTON -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="submit"></label>
@@ -153,11 +105,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        <!-- OUTPUT -->
-                        <div id="soapdump">
-                            {{data}}
-                        </div>
                     </div>
                 </div>
             </div>
