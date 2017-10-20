@@ -4,7 +4,8 @@ const express = require('express')
 const path = require("path")
 const bodyParser = require("body-parser")
 const hbs = require('hbs')
-const parseString = require('xml2js').parseString
+var xml2js = require('xml2js');
+var parser = new xml2js.Parser();
 
 // APP - DEFINITION
 const app = express()
@@ -23,7 +24,7 @@ app.get('/', function (req, res) {
   });
 })
 
-// EXPRESS ROUTE - RESULTS
+// // EXPRESS ROUTE - RESULTS
 app.get('/cucmmapper-results', function (req, res) {
   res.sendFile(path.join(__dirname+ '/public/cucm2-results.html'), {
     'title': 'CUCM 2.0'

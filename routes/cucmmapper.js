@@ -1,3 +1,16 @@
+// MODULES - INCLUDES
+var xml2js = require('xml2js');
+var parser = new xml2js.Parser();
+var transform = require('camaro');
+
+// TEMPLATE - XML CAMARO FILTER
+const template = {
+  css: ['//return', {
+    css_name: 'name',
+    css_partitions: 'clause',
+  }],
+};
+
 module.exports = function (app) {
   // FORM - SUBMIT - CUCMMAPPER
   app.post('/cucmmapper/submit', function (req, res) {
@@ -11,8 +24,7 @@ module.exports = function (app) {
     // JS - VARIABLE DEFINITION
     var authentication = username + ":" + password;
     var soapreplyx = '';
-    var csssearchx = '';
-    //var parser = new xml2js.parser();
+    var cssx = '';
 
     // HTTP.REQUEST - BUILD CALL
     var https = require("https");
@@ -52,17 +64,7 @@ module.exports = function (app) {
     // HTTP.REQUEST - Doesn't seem to need this line, but it might be useful anyway for pooling?
     options.agent = new https.Agent(options);
 
-    // SOAP - OPEN SESSION
-    var req = https.request(options, function (res) {
-      res.setEncoding('utf8');
-      res.on('data', function (d) {
-        console.log("Got Data ...");
-        //soapreplyx = d;
-        //console.log("Got Data: " + d);
-      });
-    });
-
-    // HTTP.REQUEST - RUN
+    // HTTP.REQUEST - OPEN SESSION
     let soapRequest = https.request(options, soapResponse => {
       soapResponse.setEncoding('utf8');
       soapResponse.on('data', chunk => {
@@ -70,15 +72,17 @@ module.exports = function (app) {
       });
       // HTTP.REQUEST - RESULTS + RENDER
       soapResponse.on('end', () => {
-        // parser.parseString(soapreplyx, function(err, result) {
-        //   csssearchx = result['name']
-        //   console.log(csssearchx);
-        // })
-        // var csssearchx = $(soapreplyx).find("name").text();
-        return res.render('cucmmapper-results.html', {
+        console.log(soapreplyx);
+        const result = transform(soapreplyx, template);
+        console.log(result);
+        // parser.parseString(soapreplyx, function (err, result) {
+        //   console.dir(result);
+        // var cssx = result['soapenv']['ns']['return']['css'];
+        // console.log(cssx);
+        res.render('cucmmapper-results.html', {
           title: 'CUCM 2.1',
           soapreply: soapreplyx,
-          csssearch: csssearchx
+          css: cssx,
         });
       });
     });
@@ -86,8 +90,5 @@ module.exports = function (app) {
     // SOAP - SEND AXL CALL
     soapRequest.write(soapBody);
     soapRequest.end();
-    req.on('error', function (e) {
-      console.error(e);
-    });
   });
 }
