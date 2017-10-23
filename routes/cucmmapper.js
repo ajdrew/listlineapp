@@ -11,30 +11,36 @@ const template = {
   }],
 };
 const template2 = {
-  css_name: '/soapenv/ns/return/name',
-  css_partitions: '/soapenv/ns/return/clause',
+  css_name: '/soapenv:Envelope/soapenv:Body/ns:listCssResponse/return/css/name',
+  css_partitions: '/soapenv:Envelope/soapenv:Body/ns:listCssResponse/return/css/clause',
+};
+const template3 = {
+  css: ['/soapenv:Envelope/soapenv:Body/ns:listCssResponse/return/css', {
+    css_name: 'name',
+    css_partitions: 'clause'
+  }]
 };
 
 // TEMP - XMLFORMAT TEST
 const xml = (`<?xml version='1.0' encoding='utf-8'?>` +
-`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">` +
-'<soapenv:Body>' +
-'<ns:listCssResponse xmlns:ns="http://www.cisco.com/AXL/API/11.0">' +
-'<return>' +
-'<css uuid="{E85C54E1-5737-7516-FFFC-14E97B1D0504}">' +
-'<description>description1</description>' +
-'<clause>something1</clause>' +
-'<name>name1</name>' +
-'</css>' +
-'<css uuid="{AFFC55A7-CD16-E250-09E8-9A12ABBE0C9E}">' +
-'<description>description2</description>' +
-'<clause>something2</clause>' +
-'<name>name2</name>' +
-'</css>' +
-'</return>' +
-'</ns:listCssResponse>' +
-'</soapenv:Body>' +
-'</soapenv:Envelope>');
+  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">` +
+  '<soapenv:Body>' +
+  '<ns:listCssResponse xmlns:ns="http://www.cisco.com/AXL/API/11.0">' +
+  '<return>' +
+  '<css uuid="{E85C54E1-5737-7516-FFFC-14E97B1D0504}">' +
+  '<description>description1</description>' +
+  '<clause>something1</clause>' +
+  '<name>name1</name>' +
+  '</css>' +
+  '<css uuid="{AFFC55A7-CD16-E250-09E8-9A12ABBE0C9E}">' +
+  '<description>description2</description>' +
+  '<clause>something2</clause>' +
+  '<name>name2</name>' +
+  '</css>' +
+  '</return>' +
+  '</ns:listCssResponse>' +
+  '</soapenv:Body>' +
+  '</soapenv:Envelope>');
 
 module.exports = function (app) {
   // FORM - SUBMIT - CUCMMAPPER
@@ -97,13 +103,12 @@ module.exports = function (app) {
       });
       // HTTP.REQUEST - RESULTS + RENDER
       soapResponse.on('end', () => {
-        // console.log(soapreplyx);
-        const result = transform(xml, template2);
+        const result = transform(soapreplyx, template2);
         console.log(result);
         // parser.parseString(soapreplyx, function (err, result) {
         //   console.dir(result);
-        // var cssx = result['soapenv']['ns']['return']['css'];
-        // console.log(cssx);
+        //   var cssx = result['soapenv:Envelope']['soapenv:Body']['ns:listCssResponse']['return']['css']['name'];
+        //   console.log(cssx);
         res.render('cucmmapper-results.html', {
           title: 'CUCM 2.1',
           soapreply: soapreplyx,

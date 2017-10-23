@@ -66,7 +66,24 @@
                 <!--BODY - DYNAMIC CONTENT-->
                 <div class="row">
                     <div class="col-md-12" class="pull-left">
-                        <p>{{css}}</p>
+                        <!-- <p>{{css}}</p> -->
+                        <table>
+                            <thread>
+                                <tr>
+                                    <th>CSS NAME</th>
+                                    <th>PARTITIONS</th>
+                                </tr>
+                            </thread>
+                            <tbody>
+                                {{#each css}}
+                                <tr>
+                                    <td>{{this.css_name}}</td>
+                                    <td>{{this.css_partitions}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
                         <p>-----</p>
                         <p>{{soapreply}}</p>
                     </div>
