@@ -130,6 +130,7 @@ module.exports = function (app) {
           title: 'CUCM 2.1',
           soapreply: soapreplyx,
           cucmpub: cucmpub
+          css: jasn.css
         });
       });
     });
