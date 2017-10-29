@@ -18,8 +18,9 @@
 <body>
     <!--INCLUDE - JS LIBRARIES -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" type="text/javascript"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
 
     <!--INCLUDE - ANGULAR CONTROLLER -->
@@ -31,7 +32,7 @@
     </script>
 
     <!--BODY - BOOTSTRAP PAGE SETUP -->
-    <div class="container-fluid" ng-app="">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
 
@@ -39,24 +40,33 @@
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					    </button> <a class="navbar-brand" href="/">CUCM<sup>2</sup></a>
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/">CUCM
+                            <sup>2</sup>
+                        </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href="/"><img src="https://png.icons8.com/marker/office/16" title="Marker" width="16" height="16"> CSS Map</a>
+                                <a href="/">
+                                    <img src="https://png.icons8.com/marker/office/16" title="Marker" width="16" height="16"> CSS Map</a>
                             </li>
                             <li>
-                                <a href="/"><img src="https://png.icons8.com/phone/ultraviolet/20" title="Phone" width="16" height="16"> SIP2SIP</a>
+                                <a href="/">
+                                    <img src="https://png.icons8.com/phone/ultraviolet/20" title="Phone" width="16" height="16"> SIP2SIP</a>
                             </li>
                             <li>
-                                <a href="/"><img src="https://png.icons8.com/bug/color/24" title="Bug" width="16" height="16"> Debugger</a>
+                                <a href="/">
+                                    <img src="https://png.icons8.com/bug/color/24" title="Bug" width="16" height="16"> Debugger</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a ng-href="https://{{cucmpub}}/ccmadmin/" target="_blank">{{cucmpub}}</a>
+                                <a href="https://{{cucmpub}}/ccmadmin/" target="_blank">{{cucmpub}}</a>
                             </li>
                         </ul>
                     </div>

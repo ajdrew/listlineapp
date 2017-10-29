@@ -1,6 +1,4 @@
 // MODULES - INCLUDES
-var xml2js = require('xml2js');
-var parser = new xml2js.Parser();
 var transform = require('camaro');
 
 // TEMPLATE - XML CAMARO FILTER
@@ -20,6 +18,20 @@ const template3 = {
     css_partitions: 'clause'
   }]
 };
+
+// TABULAR - CREATE AT DOM ELEMENT ID "css-table"
+// $("#css-table").tabulator({
+//   height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+//   layout:"fitColumns", //fit columns to width of table (optional)
+//   columns:[ //Define Table Columns
+//       {title:"Name", field:"cssname", width:150},
+//       {title:"Description", field:"cssdescription", align:"left", formatter:"progress"},
+//       {title:"Partitions", field:"csspartitions"},
+//   ],
+//   rowClick:function(e, row){ //trigger an alert message when the row is clicked
+//       alert("Row " + row.getData().id + " Clicked!!!!");
+//   },
+// });
 
 // TEMP - XMLFORMAT TEST
 const xml = (`<?xml version='1.0' encoding='utf-8'?>` +
@@ -103,16 +115,21 @@ module.exports = function (app) {
       });
       // HTTP.REQUEST - RESULTS + RENDER
       soapResponse.on('end', () => {
-        const result = transform(soapreplyx, template2);
-        console.log(result);
-        // parser.parseString(soapreplyx, function (err, result) {
-        //   console.dir(result);
-        //   var cssx = result['soapenv:Envelope']['soapenv:Body']['ns:listCssResponse']['return']['css']['name'];
-        //   console.log(cssx);
+        // const result = transform(soapreplyx, template2);
+        // console.log(result);
+        const json = transform(soapreplyx, {
+          css: ['//css', {
+              cssname: 'name',
+              cssdescription: 'description',
+              csspartitions: 'clause'
+          }]
+        });
+        console.log(json)
+        console.log(json.css);
         res.render('cucmmapper-results.html', {
           title: 'CUCM 2.1',
           soapreply: soapreplyx,
-          css: result,
+          cucmpub: cucmpub
         });
       });
     });

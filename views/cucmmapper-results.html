@@ -12,26 +12,59 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
         crossorigin="anonymous">
+    <!-- <link href="js/tabulator-master/dist/css/tabulator.min.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.1/css/tabulator.min.css" rel="stylesheet">
 
 </head>
 
 <body>
     <!--INCLUDE - JS LIBRARIES -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" type="text/javascript"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+        crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="js/tabulator-master/dist/js/tabulator.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.1/js/tabulator.min.js"></script>
 
-    <!--INCLUDE - ANGULAR CONTROLLER -->
+
+    <!--INCLUDE - TABULAR SCRIPT -->
     <script>
-        var app = angular.module('myApp', []);
-        app.controller('formCtrl', function ($scope) {
-            $scope.cucmpub = "x.x.x.x";
+        var tabledata = [{
+            cssdescription: 'DHHS_13_CalhounBC_MCP Restricted CSS',
+            cssname: 'DHHS_13_CalhounBC_MCP-CSS',
+            csspartitions: 'DHHS_13_CalhounBC_MCP-PT'
+        }];
+
+        $("#css-table").tabulator({
+            height: 205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+            layout: "fitColumns", //fit columns to width of table (optional)
+            columns: [ //Define Table Columns
+                {
+                    title: "Name",
+                    field: "cssname",
+                    width: 150
+                },
+                {
+                    title: "Description",
+                    field: "cssdescription",
+                    align: "left",
+                    formatter: "progress"
+                },
+                {
+                    title: "Partitions",
+                    field: "csspartitions"
+                },
+            ],
+            rowClick: function (e, row) { //trigger an alert message when the row is clicked
+                alert("Row " + row.getData().id + " Clicked!!!!");
+            },
         });
+        $("#css-table").tabulator("setData", tabledata);
     </script>
 
     <!--BODY - BOOTSTRAP PAGE SETUP -->
-    <div class="container-fluid" ng-app="">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
 
@@ -40,24 +73,36 @@
                     <div class="navbar-header">
 
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					    </button> <a class="navbar-brand" href="#">CUCM<sup>2</sup></a>
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">CUCM
+                            <sup>2</sup>
+                        </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href="#"><img src="https://png.icons8.com/marker/office/16" title="Marker" width="16" height="16"> CSS Map</a>
+                                <a href="/">
+                                    <img src="https://png.icons8.com/marker/office/16" title="Marker" width="16" height="16"> CSS Map</a>
                             </li>
                             <li>
-                                <a href="#"><img src="https://png.icons8.com/phone/ultraviolet/20" title="Phone" width="16" height="16"> SIP2SIP</a>
+                                <a href="#">
+                                    <img src="https://png.icons8.com/phone/ultraviolet/20" title="Phone" width="16" height="16"> SIP2SIP</a>
                             </li>
                             <li>
-                                <a href="#"><img src="https://png.icons8.com/bug/color/24" title="Bug" width="16" height="16"> Debugger</a>
+                                <a href="#">
+                                    <img src="https://png.icons8.com/bug/color/24" title="Bug" width="16" height="16"> Debugger</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a ng-href="https://{{cucmpub}}/ccmadmin/" target="_blank">{{cucmpub}}</a>
+                                <a href="https://{{cucmpub}}/ccmadmin/" target="_blank">Mapping:
+                                    <u>{{cucmpub}}</u>
+                                </a>
+                                </p>
                             </li>
                         </ul>
                     </div>
@@ -66,24 +111,7 @@
                 <!--BODY - DYNAMIC CONTENT-->
                 <div class="row">
                     <div class="col-md-12" class="pull-left">
-                        <!-- <p>{{css}}</p> -->
-                        <table>
-                            <thread>
-                                <tr>
-                                    <th>CSS NAME</th>
-                                    <th>PARTITIONS</th>
-                                </tr>
-                            </thread>
-                            <tbody>
-                                {{#each css}}
-                                <tr>
-                                    <td>{{this.css_name}}</td>
-                                    <td>{{this.css_partitions}}</td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-
+                        <div id="css-table"></div>
                         <p>-----</p>
                         <p>{{soapreply}}</p>
                     </div>
