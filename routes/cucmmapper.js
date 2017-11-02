@@ -232,6 +232,7 @@ module.exports = function (app) {
       });
       // HTTP.REQUEST - RESULTS + RENDER
       soapResponse.on('end', () => {
+<<<<<<< HEAD
         
         // CAMARO - CODE FOR JSON
         // const { css } = transform(xml, {
@@ -289,6 +290,24 @@ module.exports = function (app) {
             cssx: cssx,
             lineend3: lineend3
           });
+=======
+        // const result = transform(soapreplyx, template2);
+        // console.log(result);
+        const json = transform(soapreplyx, {
+          css: ['//css', {
+              cssname: 'name',
+              cssdescription: 'description',
+              csspartitions: 'clause'
+          }]
+        });
+        console.log(json)
+        console.log(json.css);
+        res.render('cucmmapper-results.html', {
+          title: 'CUCM 2.1',
+          soapreply: soapreplyx,
+          cucmpub: cucmpub
+          css: jasn.css
+>>>>>>> 1417a21a91a19e118aaea4ed36d42f754f6a9641
         });
 
         // XML2JS - 1ST WORKING CODE !!!
