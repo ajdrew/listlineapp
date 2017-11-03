@@ -111,9 +111,24 @@
                 <!--BODY - DYNAMIC CONTENT-->
                 <div class="row">
                     <div class="col-md-12" class="pull-left">
-                        <div id="css-table"></div>
+                        <table>
+                            <tr>
+                                <th>CSS</th>
+                                <th>DESCRIPTION</th>
+                                <th>PARTITIONS</th>
+                            </tr>
+                            {{#each cssx}}
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.description}}</td>
+                                <td>{{this.clause}}</td>
+                            </tr>
+                            {{/each}}
+                        </table>
                         <p>-----</p>
                         <p>{{soapreply}}</p>
+                        <p>-----</p>
+                        <p>{{lineend3}}</p>
                     </div>
                 </div>
             </div>
