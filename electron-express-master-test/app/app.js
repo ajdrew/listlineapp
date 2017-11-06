@@ -30,7 +30,7 @@ var routingextensions = require('./routes/cucmmapper.js')(app);
 
 // APP - START
 app.listen(3000, function () {
-  console.log('Please keep this terminal open until finished as it is running the backend API communications with CUCM.')
+  // console.log('Please keep this terminal open until finished as it is running the backend API communications with CUCM.')
 });
 
 // opn('http://localhost:3000');

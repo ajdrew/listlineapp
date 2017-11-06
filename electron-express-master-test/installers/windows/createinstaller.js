@@ -15,7 +15,7 @@ function getInstallerConfig () {
 
     return Promise.resolve({
        appDirectory: path.join(outPath, 'cucm2-app-win32-ia32'),
-       authors: 'Christian Engvall',
+       authors: 'Andrew Petersen',
        noMsi: true,
        outputDirectory: path.join(outPath, 'windows-installer'),
        exe: 'cucm2-app.exe',
