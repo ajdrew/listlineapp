@@ -102,7 +102,7 @@ module.exports = function (app) {
                     //   console.log(cssx);
                     //   console.log(spacer);
                     res.render('cucmmapper-results.html', {
-                        title: 'CUCM 2.0',
+                        title: 'CUCM Toolbox',
                         cucmpub: cucmpub,
                         cssx: cssx,
                         soapreply: soapreplyx,

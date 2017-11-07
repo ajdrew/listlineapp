@@ -21,7 +21,7 @@ app.set('view engine', 'html');
 // EXPRESS ROUTE - INDEX
 app.get('/', function (req, res) {
   res.render('index.html', {
-    title: 'CUCM 2.0'
+    title: 'CUCM Toolbox'
   });
 })
 
